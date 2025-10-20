@@ -1,24 +1,28 @@
 public class quickSort {
 
-    private static int ass=0, comp=0, recur=0;
+    private static int ass=0, comp=0, recur=1;
 
-    public static void quickSort(int[] arr, int low, int high){
+    public static String quickSort(int[] arr, int low, int high){
+
+        Main.print(arr);
+        System.out.println("\nAssignees: " + ass + ", Comparisons: " + comp +" Recursion calls:"+ recur);
 
         comp++;
         if(low<high){
+            recur++;
 
-            int pivotIndex = partition(arr, low, high);
             ass++;
+            int pivotIndex = partition(arr, low, high);
 
-            recur++;
             quickSort(arr, low, pivotIndex - 1);
-            recur++;
-            quickSort(arr, pivotIndex + 1, high);
 
-            System.out.println("\nAssignees: " + ass + ", Comparisons: " + comp +" Recursion calls:"+ recur);
-            Main.print(arr);
+            quickSort(arr, pivotIndex + 1, high);
         }
+
+        return "In total\nAssignees: " + ass + ", Comparisons: " + comp +" Recursion calls:"+ recur;
     }
+
+
 
     private static int partition(int[] arr, int low, int high){
         int pivot = arr[low];
@@ -27,14 +31,19 @@ public class quickSort {
         ass+=3;
 
         while(true){
+
             comp+=2;
             while(left <= right && arr[left] <= pivot){
                 left++;
+                ass++;
             }
+
             comp+=2;
             while(right >= left && arr[right] >= pivot){
                 right--;
+                ass++;
             }
+
             comp++;
             if(right < left){
                 break;

@@ -7,7 +7,6 @@ public class mergeSort {
         int n =  A.length;
 
 
-        comp++;
         if (n < 2) {
             return;
         }
@@ -40,10 +39,11 @@ public class mergeSort {
          System.out.println("\nright part:");
         Main.print(right);
 
+        merge(A, left, right, left.length, right.length);
         System.out.println("\nAfter merge: ");
         Main.print(A);
 
-        System.out.println("\nAssignees: "+ass+" Comparisons: "+comp +"Recursion calls:"+ recur);
+        System.out.println("\nAssignees: "+ass+" Comparisons: "+comp +" Recursion calls:"+ recur);
         System.out.println("\n");
         k++;
     }
