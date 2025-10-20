@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Lab1_insertSort_selectionSort.iml" filepath="$PROJECT_DIR$/Lab1_insertSort_selectionSort.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Lab2_mergeSort_quickSort/Lab2_mergeSort_quickSort.iml" filepath="$PROJECT_DIR$/../Lab2_mergeSort_quickSort/Lab2_mergeSort_quickSort.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Lab3_heapSort/Lab3_heapSort.iml" filepath="$PROJECT_DIR$/../Lab3_heapSort/Lab3_heapSort.iml" />
     </modules>
   </component>
 </project>
