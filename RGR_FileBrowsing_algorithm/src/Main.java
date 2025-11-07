@@ -1,51 +1,59 @@
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Main {
+
+    static String filename;
+    static int found = 0, assignees = 0, comparisons = 0, recursion = 0, directories = 0, files=0;
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Enter root directory");
-        String rdir = sc.nextLine();
+        String dir = sc.nextLine();
 
         System.out.println("Enter filename(with extention)");
         filename = sc.nextLine();
 
-        browser(rdir);
+        browser(dir);
 
-        System.out.println("Assignees: " + assignees+"  Comparissons: "+comparissons+"  Recursion callls: "+recursion);
+        System.out.println(
+                "Assignees: " + assignees+
+                "\nComparisons: "+comparisons+
+                "\nRecursion callls: "+recursion+
+                "\nDirectories visited: "+directories +
+                "\nFiles checked:"+files+
+                "\nObjects checked(directories+files)"+ (files+directories));
     }
-    static String filename;
-    static int found = 0, assignees = 0, comparissons = 1, recursion = 1;
 
     static void browser(String dir){
-
-        Path dirPath = Paths.get(dir);
-        assignees++;
-
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dirPath)) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
             assignees++;
 
-            for (Path entry : stream) {
+            for (Path obj : stream) {
 
+                comparisons++;
                 if (found ==1) return;
-                comparissons++;
 
-                comparissons++;
-                if(Files.isDirectory(entry)) {
-                    System.out.println("Directory: " + entry);
+                comparisons++;
+                if(Files.isDirectory(obj)) {
+                    directories++;
+                    System.out.println("Directory: " + obj);
+                    System.out.println("Directories visited: "+directories+"\nFiles cheked:"+files);
+
                     recursion++;
-                    browser(entry.toAbsolutePath().toString());
+                    browser(obj.toAbsolutePath().toString());
                 }
+                else {
+                    files++;
 
-                comparissons++;
-                if(entry.getFileName().toString().equals(filename)) {
-                    System.out.println(entry.toAbsolutePath().toString() + " --- FILE FOUND ");
-                    found++;
+                    comparisons++;
+                    if (obj.getFileName().toString().equals(filename)) {
+                        System.out.println(obj.toAbsolutePath() + " --- FILE FOUND ");
+                        found++;
+                    }
                 }
             }
         } catch (IOException e) {

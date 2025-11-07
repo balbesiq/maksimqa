@@ -29,6 +29,7 @@ public class quickSort {
         int left = low +1;
         int right = high;
         ass+=3;
+        System.out.println("AT START left:"+ left +" right:"+right);
 
         while(true){
 
@@ -61,6 +62,7 @@ public class quickSort {
         arr[right] = tmp;
         ass+=3;
 
+       // System.out.println( "left:"+left+" right:"+right);
         return right;
     }
 }
