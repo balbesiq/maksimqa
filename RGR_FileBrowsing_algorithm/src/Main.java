@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -20,19 +21,19 @@ public class Main {
         browser(dir);
 
         System.out.println(
-                "Assignees: " + assignees+
+                "\n\nAssignees: " + assignees+
                 "\nComparisons: "+comparisons+
                 "\nRecursion callls: "+recursion+
                 "\nDirectories visited: "+directories +
-                "\nFiles checked:"+files+
-                "\nObjects checked(directories+files)"+ (files+directories));
+                "\nFiles checked: "+files+
+                "\nObjects checked(directories+files): "+ (files+directories)
+        );
     }
 
     static void browser(String dir){
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
-            assignees++;
-
             for (Path obj : stream) {
+                assignees++;
 
                 comparisons++;
                 if (found ==1) return;
@@ -40,8 +41,8 @@ public class Main {
                 comparisons++;
                 if(Files.isDirectory(obj)) {
                     directories++;
-                    System.out.println("Directory: " + obj);
-                    System.out.println("Directories visited: "+directories+"\nFiles cheked:"+files);
+                    System.out.println("\nDirectory: " + obj);
+                    System.out.println("Directories visited: "+directories+"\nFiles cheked: "+files);
 
                     recursion++;
                     browser(obj.toAbsolutePath().toString());
