@@ -40,6 +40,7 @@ public class Main {
                         "\nMaximum Recursion level: "+maxDepth
         );
 
+        //Обнуляємо лічильники для наступного алгоритму
         found = 0;
         assignees = 0;
         comparisons = 0;
