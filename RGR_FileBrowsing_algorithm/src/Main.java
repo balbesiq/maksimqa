@@ -100,31 +100,31 @@ public class Main {
 
     static void bfs(String startDir) {
         Queue<Pair<Path, Integer>> queue = new ArrayDeque<>();//Створюємо чергу
-        queue.add(new Pair<>(Paths.get(startDir), 1));
+        queue.add(new Pair<>(Paths.get(startDir), 1));//Додаємо до черги кореневий каталог
 
         while (!queue.isEmpty()) {
             comparisons++;
 
-            Pair<Path, Integer> currentPair = queue.poll();
-            Path current = currentPair.getKey();
-            int depth = currentPair.getValue();
+            Pair<Path, Integer> currentPair = queue.poll();//Вилучаємо каталог з черги для праці на поточному кроці
+            Path current = currentPair.getKey();//Записуємо ім'я каталогу до змінної щоб відкрити поток для каталогу
+            int depth = currentPair.getValue();//Отримуємо рівень вкладеності каталогу на поточному кроці
             assignees++;
             directories++;
 
             if (depth > maxDepth) maxDepth = depth;
 
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(current)) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(current)) {//Відкриваємо поток читання для каталога на поточнмоу кроці
                 for (Path obj : stream) {
                     assignees++;
 
                     comparisons++;
-                    if (Files.isDirectory(obj)) {
+                    if (Files.isDirectory(obj)) {//Якщо об'єкт - директорія: додаємо до черги
                         queue.add(new Pair<>(obj.toAbsolutePath(), depth + 1));
                     } else {
                         files++;
 
                         comparisons++;
-                        if (obj.getFileName().toString().equals(filename)) {
+                        if (obj.getFileName().toString().equals(filename)) {//Якщо ім'я об'єкту співпадає з шуканим закінчуємо пошук
                             finish = System.nanoTime();
                             System.out.println(obj.toAbsolutePath() + " --- FILE FOUND ");
                             return;
@@ -137,7 +137,7 @@ public class Main {
         }
     }
 
-    static class Pair<K, V> {
+    static class Pair<K, V> {//Клас для зберігання інформації про каталоги у черзі, містить в собі ім'я каталог та йоро рівень вкладенності
         K key;
         V value;
         Pair(K key, V value) { this.key = key; this.value = value; }
