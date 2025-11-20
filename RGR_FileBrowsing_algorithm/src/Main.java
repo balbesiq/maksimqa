@@ -6,8 +6,11 @@ import java.util.Scanner;
 
 public class Main {
 
+    //Ініціалізація зміної для сберігання ім'я шуканого файлу
     static String filename;
-    static int found = 0, assignees = 0, comparisons = 0, recursion = 0, directories = 0, files=0, currentDepth =0,maxDepth=0;
+    //Ініціалізація зміних для обчислення складності алгоритмів, та підрвхунку оглянутих об'єктів
+    static int found = 0,assignees = 0,comparisons = 0,recursion = 0, directories = 0, files=0, currentDepth =0,maxDepth=0;
+    //Ініціалізація змінних для відситеження часу виконання
     static long start, finish;
 
 
@@ -59,47 +62,44 @@ public class Main {
     }
 
     static void dfs(String dir){
-        currentDepth++;
+        currentDepth++;//Відстеження рівня рекурсіх, який буде досягнено алгоритмом
         if (currentDepth > maxDepth) {
             maxDepth = currentDepth;
         }
 
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
-            for (Path obj : stream) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) { // Відкриття потоку читання данних
+            for (Path obj : stream) { // Для кожного об'єкту у потоці
                 assignees++;
 
                 comparisons++;
-                if (found == 1) {
+                if (found == 1) { //Якщо файл знайдено повернення по рекурсійному зануренню
                     currentDepth--;
-
                     return;
                 }
 
                 comparisons++;
-                if (Files.isDirectory(obj)) {
+                if (Files.isDirectory(obj)) { //Якщо об'єкт - директроіія: рекурсивно викликаємо для нбого функції пошуку
                     directories++;
                     recursion++;
                     dfs(obj.toAbsolutePath().toString());
                 } else {
                     files++;
-                    System.out.println(obj.toAbsolutePath());
                     comparisons++;
-                    if (obj.getFileName().toString().equals(filename)) {
-                        finish = System.nanoTime();
+                    if (obj.getFileName().toString().equals(filename)) { //Якщо ім'я об'єкту співпадає з шуканим ім'я
+                        finish = System.nanoTime();                      //Встановлюємо змінюєио значення маркеру found
                         System.out.println(obj.toAbsolutePath() + " --- FILE FOUND ");
                         found++;
                     }
                 }
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении каталога: " + e.getMessage());
+            System.err.println("Ошибка при чтении каталога: " + e.getMessage());//Якщо каталог недоступний для читання через обмеження прав
         }
-
         currentDepth--;
     }
 
     static void bfs(String startDir) {
-        Queue<Pair<Path, Integer>> queue = new ArrayDeque<>();
+        Queue<Pair<Path, Integer>> queue = new ArrayDeque<>();//Створюємо чергу
         queue.add(new Pair<>(Paths.get(startDir), 1));
 
         while (!queue.isEmpty()) {
