@@ -47,8 +47,6 @@ public class Main {
 
         start = System.nanoTime();
         bfs(dir);
-
-
         System.out.println(
                 "\nAssignees: " + assignees+
                         "\nComparisons: "+comparisons+
@@ -73,6 +71,7 @@ public class Main {
                 comparisons++;
                 if (found == 1) {
                     currentDepth--;
+
                     return;
                 }
 
@@ -83,6 +82,7 @@ public class Main {
                     dfs(obj.toAbsolutePath().toString());
                 } else {
                     files++;
+                    System.out.println(obj.toAbsolutePath());
                     comparisons++;
                     if (obj.getFileName().toString().equals(filename)) {
                         finish = System.nanoTime();
@@ -101,13 +101,9 @@ public class Main {
     static void bfs(String startDir) {
         Queue<Pair<Path, Integer>> queue = new ArrayDeque<>();
         queue.add(new Pair<>(Paths.get(startDir), 1));
-        int maxDepth = 0;
 
         while (!queue.isEmpty()) {
             comparisons++;
-            if (found == 1) {
-                return;
-            }
 
             Pair<Path, Integer> currentPair = queue.poll();
             Path current = currentPair.getKey();
@@ -120,21 +116,17 @@ public class Main {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(current)) {
                 for (Path obj : stream) {
                     assignees++;
-                    comparisons++;
-                    if (found == 1) {
-                        return;
-                    }
 
                     comparisons++;
                     if (Files.isDirectory(obj)) {
                         queue.add(new Pair<>(obj.toAbsolutePath(), depth + 1));
                     } else {
                         files++;
+
                         comparisons++;
                         if (obj.getFileName().toString().equals(filename)) {
                             finish = System.nanoTime();
                             System.out.println(obj.toAbsolutePath() + " --- FILE FOUND ");
-                            found++;
                             return;
                         }
                     }
