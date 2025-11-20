@@ -29,7 +29,8 @@ public class Main {
 
 
         System.out.println(
-                "\nAssignees: " + assignees+
+                "DFS statistics" +
+                        "\nAssignees: " + assignees+
                         "\nComparisons: "+comparisons+
                         "\nRecursion callls: "+recursion+
                         "\nDirectories visited: "+directories +
@@ -51,7 +52,8 @@ public class Main {
         start = System.nanoTime();
         bfs(dir);
         System.out.println(
-                "\nAssignees: " + assignees+
+                "BFS statistics" +
+                        "\nAssignees: " + assignees+
                         "\nComparisons: "+comparisons+
                         "\nDirectories visited: "+directories +
                         "\nFiles checked: "+files+
