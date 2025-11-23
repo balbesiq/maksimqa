@@ -51,7 +51,7 @@ public class Main {
         System.out.println("\n\n");
 
         start = System.nanoTime();
-        bfs(dir);
+        //bfs(dir);
         System.out.println(
                 "BFS statistics" +
                         "\nAssignees: " + assignees+
