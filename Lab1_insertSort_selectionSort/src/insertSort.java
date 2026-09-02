@@ -11,10 +11,10 @@ public class insertSort {
             int j = i - 1;
             ass++;
 
-            while (j >= 0 && key < arr[j]) {
+            while (true) {
                 comp += 1;
-
-                arr[j + 1] = arr[j];
+                if (j < 0 || key >= arr[j]) break;
+                    arr[j + 1] = arr[j];
                 ass += 1;
 
                 j--;
